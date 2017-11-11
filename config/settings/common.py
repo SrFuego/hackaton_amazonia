@@ -37,9 +37,12 @@ DJANGO_APPS = (
 THIRD_PARTY_APPS = (
     'pipeline',
     'rest_framework',
+    'rest_framework.authtoken',
 )
 
 LOCAL_APPS = (
+    'apps.accounts',
+    'apps.common',
 )
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS

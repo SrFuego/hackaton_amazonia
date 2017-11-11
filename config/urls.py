@@ -18,6 +18,7 @@ from django.conf import settings
 from django.conf.urls import include, url
 from django.contrib import admin
 from rest_framework.documentation import include_docs_urls
+from apps.accounts.views import ObtainAuthToken
 
 API_TITLE = 'API app para la hackaton de la amazonia'
 API_DESCRIPTION = 'nombre de la app aun por definir :D'
@@ -27,6 +28,7 @@ urlpatterns = [
     url(
         r'^api-auth/',
         include('rest_framework.urls', namespace='rest_framework')),
+    url(r'^api-token-auth/', ObtainAuthToken.as_view()),
     url(
         r'^docs/',
         include_docs_urls(title=API_TITLE, description=API_DESCRIPTION))
