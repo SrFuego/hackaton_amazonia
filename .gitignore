@@ -1,0 +1,13 @@
+**.pyc
+**.ropeproject/
+**.sqlite3
+**.swo
+**.swp
+**.txt
+**/__pycache__/
+**/htmlcov/
+**/media/
+.coverage
+.env
+.idea/
+.python-version

@@ -1,0 +1,17 @@
+coreapi
+django < 1.12
+django-cors-headers
+django-crispy-forms
+django-dotenv
+django-filter
+django-material
+django-model-utils
+django-pipeline
+django-stdimage
+djangorestframework
+drfdocs
+markdown
+pip-tools
+psycopg2
+pygments
+unipath
