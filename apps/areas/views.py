@@ -85,6 +85,7 @@ class VisitsAnualView(APIView):
             aux[str(last_year)] += sum(
                 visits_last_year.values_list('non_paying', flat=True))
             aux['percent'] = aux[str(this_year)] * 100 / aux[str(last_year)] - 100 if aux[str(last_year)] else 0
+            aux['negative'] = False if aux['percent'] > 0 else True
             aux_list.append(aux)
             aux = {}
 
