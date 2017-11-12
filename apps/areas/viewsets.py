@@ -8,11 +8,17 @@
 from rest_framework.viewsets import ModelViewSet
 
 # Local imports
-from .models import Money, Visits
-from .serializers import MoneySerializer, VisitsSerializer
+from .models import Money, ProtectedNaturalArea, Visits
+from .serializers import (
+    MoneySerializer, ProtectedNaturalAreaSerializer, VisitsSerializer)
 
 
 # Create your viewsets here.
+class ProtectedNaturalAreaViewSet(ModelViewSet):
+    queryset = ProtectedNaturalArea.objects.all()
+    serializer_class = ProtectedNaturalAreaSerializer
+
+
 class VisitsViewSet(ModelViewSet):
     queryset = Visits.objects.all()
     serializer_class = VisitsSerializer
