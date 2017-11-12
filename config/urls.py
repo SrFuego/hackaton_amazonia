@@ -18,13 +18,25 @@ from django.conf import settings
 from django.conf.urls import include, url
 from django.contrib import admin
 from rest_framework.documentation import include_docs_urls
+from rest_framework import routers
+
 from apps.accounts.views import ObtainAuthToken
+from apps.accounts.routers import router_list as accounts_router
+
+routers_tuples = (accounts_router,)
+routers_lists = sum([list(router_list) for router_list in routers_tuples], [])
+
+router = routers.DefaultRouter()
+
+for router_list in sorted(routers_lists):
+    router.register(router_list[0], router_list[1])
 
 API_TITLE = 'API app para la hackaton de la amazonia'
 API_DESCRIPTION = 'nombre de la app aun por definir :D'
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^api/v1/', include(router.urls)),
     url(
         r'^api-auth/',
         include('rest_framework.urls', namespace='rest_framework')),
@@ -38,5 +50,5 @@ if settings.DEBUG:
     import debug_toolbar
 
     urlpatterns = [
-        url(r'^__debug__/', include(debug_toolbar.urls)),
-    ] + urlpatterns
+                      url(r'^__debug__/', include(debug_toolbar.urls)),
+                  ] + urlpatterns
