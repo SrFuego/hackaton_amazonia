@@ -16,8 +16,6 @@ from .models import Visits
 
 # Create your views here.
 class ChartView(APIView):
-    authentication_classes = (
-        authentication.TokenAuthentication, authentication.BasicAuthentication)
     permission_classes = (permissions.IsAuthenticated,)
 
     def get(self, request, format=None):
