@@ -31,4 +31,11 @@ class ObtainAuthToken(APIView):
         user = serializer.validated_data['user']
         update_last_login(None, user)
         token, created = Token.objects.get_or_create(user=user)
-        return Response({'token': token.key})
+        try:
+            account = user.account
+            return Response({
+                'account_level': account.level,
+                'token': token.key
+            })
+        except Exception as e:
+            return Response({'error': str(e)})
