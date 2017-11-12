@@ -8,10 +8,11 @@
 
 
 # Local imports
-from .viewsets import VisitsViewSet
+from .viewsets import MoneyViewSet, VisitsViewSet
 
 
 # Create your routers here.
 router_list = (
+    (r'money', MoneyViewSet),
     (r'visits', VisitsViewSet),
 )
