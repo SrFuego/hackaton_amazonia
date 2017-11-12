@@ -80,12 +80,13 @@ class VisitsAnualView(APIView):
                 visits_last_year = visits_last_year.filter(
                     date__month=request.query_params['month'])
             aux['anp'] = anp.name
-            aux[str(this_year)] = sum(visits.values_list('payers', flat=True))
-            aux[str(this_year)] += sum(
+            aux['year' + str(this_year)] = sum(
+                visits.values_list('payers', flat=True))
+            aux['year' + str(this_year)] += sum(
                 visits.values_list('non_paying', flat=True))
-            aux[str(last_year)] = sum(
+            aux['year' + str(last_year)] = sum(
                 visits_last_year.values_list('payers', flat=True))
-            aux[str(last_year)] += sum(
+            aux['year' + str(last_year)] += sum(
                 visits_last_year.values_list('non_paying', flat=True))
             aux_percent = aux[str(this_year)] * 100 / aux[str(last_year)]
             aux['percent'] = aux_percent - 100 if aux[str(last_year)] else 0
