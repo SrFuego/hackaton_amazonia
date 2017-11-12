@@ -30,7 +30,7 @@ class ChartView(APIView):
             'foreign': foreign,
             'national': national,
             'exonerated': exonerated,
-            'foreign_percent': round(foreign * 100 / total),
-            'national_percent': round(national * 100 / total),
-            'exonerated_percent': round(exonerated * 100 / total),
+            'foreign_percent': round(foreign * 100 / total) if total else 0,
+            'national_percent': round(national * 100 / total) if total else 0,
+            'exonerated_percent': round(exonerated * 100 / total) if total else 0,
         })
