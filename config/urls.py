@@ -40,7 +40,7 @@ urlpatterns = [
     url(
         r'^api-auth/',
         include('rest_framework.urls', namespace='rest_framework')),
-    url(r'^api-token-auth/', ObtainAuthToken.as_view()),
+    url(r'^api/v1/api-token-auth/', ObtainAuthToken.as_view()),
     url(
         r'^docs/',
         include_docs_urls(title=API_TITLE, description=API_DESCRIPTION))
