@@ -19,6 +19,9 @@ class ProtectedNaturalArea(TimeStampedModel):
         Account, related_name='protected_natural_area')
     name = models.CharField(max_length=100, unique=True)
 
+    def __str__(self):
+        return self.name
+
 
 class Visits(TimeStampedModel):
     approved = models.BooleanField(default=False)
@@ -30,6 +33,9 @@ class Visits(TimeStampedModel):
     payers = models.PositiveIntegerField()
     protected_natural_area = models.ForeignKey(
         'ProtectedNaturalArea', related_name='visits')
+
+    def __str__(self):
+        return self.protected_natural_area.name
 
 
 class Money(TimeStampedModel):
@@ -66,3 +72,6 @@ class Money(TimeStampedModel):
         related_name='account')
     month = models.CharField(max_length=3, choices=MONTH_CHOICES)
     mount = models.DecimalField(decimal_places=2, max_digits=10)
+
+    def __str__(self):
+        return self.mount
