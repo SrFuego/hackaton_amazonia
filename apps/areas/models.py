@@ -48,7 +48,7 @@ class Money(TimeStampedModel):
     MONTH_CHOICES = (
         (JANUARY, 'enero'),
         (FEBRUARY, 'febrero'),
-        (MARCH,'marzo'),
+        (MARCH, 'marzo'),
         (APRIL, 'abril'),
         (MAY, 'mayo'),
         (JUNE, 'junio'),
