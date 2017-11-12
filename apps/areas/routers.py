@@ -5,10 +5,13 @@
 
 
 # Third party apps imports
-from rest_framework.routers import DefaultRouter
+
 
 # Local imports
+from .viewsets import VisitsViewSet
 
 
 # Create your routers here.
-router = DefaultRouter()
+router_list = (
+    (r'visits', VisitsViewSet),
+)

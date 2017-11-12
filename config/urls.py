@@ -22,8 +22,9 @@ from rest_framework import routers
 
 from apps.accounts.views import ObtainAuthToken
 from apps.accounts.routers import router_list as accounts_router
+from apps.areas.routers import router_list as areas_router
 
-routers_tuples = (accounts_router,)
+routers_tuples = (accounts_router, areas_router)
 routers_lists = sum([list(router_list) for router_list in routers_tuples], [])
 
 router = routers.DefaultRouter()
