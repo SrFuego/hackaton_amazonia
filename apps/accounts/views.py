@@ -34,6 +34,7 @@ class ObtainAuthToken(APIView):
         try:
             account = user.account
             return Response({
+                'account_id': account.id,
                 'account_level': account.level,
                 'token': token.key
             })
