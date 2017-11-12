@@ -40,3 +40,9 @@ DATABASES = {
 PIPELINE = {
     'PIPELINE_ENABLED': True,
 }
+
+
+GRAPH_MODELS = {
+    'all_applications': True,
+    'group_models': True,
+}
