@@ -16,7 +16,7 @@ from ..accounts.models import Account
 # Create your models here.
 class ProtectedNaturalArea(TimeStampedModel):
     account = models.OneToOneField(
-        'Account', related_name='protected_natural_area')
+        Account, related_name='protected_natural_area')
     name = models.CharField(max_length=100, unique=True)
 
 
@@ -28,7 +28,8 @@ class Visits(TimeStampedModel):
     national = models.PositiveIntegerField()
     non_paying = models.PositiveIntegerField()
     payers = models.PositiveIntegerField()
-    protected_natural_area = models.ForeignKey('ProtectedNaturalArea')
+    protected_natural_area = models.ForeignKey(
+        'ProtectedNaturalArea', related_name='visits')
 
 
 class Money(TimeStampedModel):
@@ -60,7 +61,8 @@ class Money(TimeStampedModel):
         (DECEMBER, 'diciembre'),
     )
 
-    charge = models.ForeignKey(
-        'Account', limit_choices_to={'level': Account.ADMIN})
+    account = models.ForeignKey(
+        Account, limit_choices_to={'level': Account.ADMIN},
+        related_name='account')
     month = models.CharField(max_length=3, choices=MONTH_CHOICES)
     mount = models.DecimalField(decimal_places=2, max_digits=10)
