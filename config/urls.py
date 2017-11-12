@@ -23,7 +23,7 @@ from rest_framework import routers
 from apps.accounts.views import ObtainAuthToken
 from apps.accounts.routers import router_list as accounts_router
 from apps.areas.routers import router_list as areas_router
-from apps.areas.views import ChartView
+from apps.areas.views import ChartView, ChartPayersView
 
 routers_tuples = (accounts_router, areas_router)
 routers_lists = sum([list(router_list) for router_list in routers_tuples], [])
@@ -44,6 +44,7 @@ urlpatterns = [
         include('rest_framework.urls', namespace='rest_framework')),
     url(r'^api/v1/api-token-auth/', ObtainAuthToken.as_view()),
     url(r'^api/v1/chart/', ChartView.as_view()),
+    url(r'^api/v1/chart-payers/', ChartPayersView.as_view()),
     url(
         r'^docs/',
         include_docs_urls(title=API_TITLE, description=API_DESCRIPTION))
