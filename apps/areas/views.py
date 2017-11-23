@@ -8,20 +8,18 @@ from django.utils import timezone
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-
 # Local imports
 from .models import ProtectedNaturalArea, Visits
 
 
 # Create your views here.
 class ChartView(APIView):
-
     def get(self, request, format=None):
+        visits = Visits.objects.filter(date__year=timezone.now().year)
         if request.query_params.__len__() == 0:
-            visits = Visits.objects.filter(date__month=timezone.now().month)
+            visits = visits.filter(date__month=timezone.now().month)
         else:
-            visits = Visits.objects.filter(
-                date__month=request.query_params['month'])
+            visits = visits.filter(date__month=request.query_params['month'])
         foreign = sum(visits.values_list('foreign', flat=True))
         national = sum(visits.values_list('national', flat=True))
         exonerated = sum(visits.values_list('exonerated', flat=True))
@@ -39,10 +37,10 @@ class ChartView(APIView):
 
 
 class ChartPayersView(APIView):
-
     def get(self, request, format=None):
+        visits = Visits.objects.filter(date__year=timezone.now().year)
         if request.query_params.__len__() == 0:
-            visits = Visits.objects.filter(date__month=timezone.now().month)
+            visits = visits.filter(date__month=timezone.now().month)
         else:
             visits = Visits.objects.filter(
                 date__month=request.query_params['month'])
