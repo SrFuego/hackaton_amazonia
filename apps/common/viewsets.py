@@ -5,7 +5,7 @@
 
 
 # Third party apps imports
-from rest_framework.viewsets import ModelViewSet
+# from rest_framework.viewsets import ModelViewSet
 
 
 # Local imports
