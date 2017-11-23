@@ -17,17 +17,21 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls import include, url
 from django.contrib import admin
-from rest_framework.documentation import include_docs_urls
-from rest_framework import routers
 
-from apps.accounts.views import ObtainAuthToken
-from apps.areas.views import ChartView, ChartPayersView
+
+from rest_framework.documentation import include_docs_urls
+
 
 from apps.common.routers import router
 
 
-API_TITLE = 'API app para la hackaton de la amazonia'
-API_DESCRIPTION = 'nombre de la app aun por definir :D'
+from apps.accounts.views import ObtainAuthToken
+from apps.areas.views import ChartView, ChartPayersView
+
+
+
+API_TITLE = "API app para la hackaton de la amazonia"
+API_DESCRIPTION = "nombre de la app aun por definir :D"
 
 urlpatterns = [
     url(r"^admin/", admin.site.urls),
@@ -35,7 +39,9 @@ urlpatterns = [
     url(
         r"^api-auth/",
         include("rest_framework.urls", namespace="rest_framework")),
-    url(r"^api/v1/api-token-auth/", ObtainAuthToken.as_view()),
+    url(
+        r"^api/v1/api-token-auth/", ObtainAuthToken.as_view(),
+        name="custom-token-view"),
     url(r"^api/v1/chart/", ChartView.as_view()),
     url(r"^api/v1/chart-payers/", ChartPayersView.as_view()),
     url(
