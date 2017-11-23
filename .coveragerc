@@ -3,5 +3,6 @@ omit =
     */migrations/*
     config/*
     apps/*/tests/*
+    apps/*/apps.py
 
 show_missing = True
