@@ -17,37 +17,35 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls import include, url
 from django.contrib import admin
+
+
 from rest_framework.documentation import include_docs_urls
-from rest_framework import routers
+
+
+from apps.common.routers import router
+
 
 from apps.accounts.views import ObtainAuthToken
-from apps.accounts.routers import router_list as accounts_router
-from apps.areas.routers import router_list as areas_router
 from apps.areas.views import ChartView, ChartPayersView, VisitsAnualView
 
-routers_tuples = (accounts_router, areas_router)
-routers_lists = sum([list(router_list) for router_list in routers_tuples], [])
 
-router = routers.DefaultRouter()
-
-for router_list in sorted(routers_lists):
-    router.register(router_list[0], router_list[1])
-
-API_TITLE = 'API app para la hackaton de la amazonia'
-API_DESCRIPTION = 'nombre de la app aun por definir :D'
+API_TITLE = "API app para la hackaton de la amazonia"
+API_DESCRIPTION = "nombre de la app aun por definir :D"
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
-    url(r'^api/v1/', include(router.urls)),
+    url(r"^admin/", admin.site.urls),
+    url(r"^api/v1/", include(router.urls, namespace="api")),
     url(
-        r'^api-auth/',
-        include('rest_framework.urls', namespace='rest_framework')),
-    url(r'^api/v1/api-token-auth/', ObtainAuthToken.as_view()),
-    url(r'^api/v1/chart/', ChartView.as_view()),
-    url(r'^api/v1/chart-payers/', ChartPayersView.as_view()),
-    url(r'^api/v1/visits-anual/', VisitsAnualView.as_view()),
+        r"^api-auth/",
+        include("rest_framework.urls", namespace="rest_framework")),
     url(
-        r'^docs/',
+        r"^api/v1/api-token-auth/", ObtainAuthToken.as_view(),
+        name="custom-token-view"),
+    url(r"^api/v1/chart/", ChartView.as_view()),
+    url(r"^api/v1/chart-payers/", ChartPayersView.as_view()),
+    url(r"^api/v1/visits-anual/", VisitsAnualView.as_view()),
+    url(
+        r"^docs/",
         include_docs_urls(title=API_TITLE, description=API_DESCRIPTION))
 ]
 
@@ -55,5 +53,5 @@ if settings.DEBUG:
     import debug_toolbar
 
     urlpatterns = [
-                      url(r'^__debug__/', include(debug_toolbar.urls)),
-                  ] + urlpatterns
+        url(r"^__debug__/", include(debug_toolbar.urls)),
+    ] + urlpatterns

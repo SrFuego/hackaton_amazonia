@@ -12,6 +12,6 @@ from .viewsets import AccountViewSet
 
 
 # Create your routers here.
-router_list = (
-    (r'accounts', AccountViewSet),
+accounts = (
+    (r"accounts", AccountViewSet),
 )
