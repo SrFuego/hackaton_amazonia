@@ -16,7 +16,7 @@ from ..accounts.models import Account
 # Create your models here.
 class ProtectedNaturalArea(TimeStampedModel):
     account = models.OneToOneField(
-        Account, related_name='protected_natural_area')
+        Account, related_name="protected_natural_area")
     name = models.CharField(max_length=100, unique=True)
 
     def __str__(self):
@@ -32,7 +32,7 @@ class Visits(TimeStampedModel):
     non_paying = models.PositiveIntegerField()
     payers = models.PositiveIntegerField()
     protected_natural_area = models.ForeignKey(
-        'ProtectedNaturalArea', related_name='visits')
+        "ProtectedNaturalArea", related_name="visits")
 
     def __str__(self):
         return self.protected_natural_area.name
@@ -53,23 +53,23 @@ class Money(TimeStampedModel):
     DECEMBER = 12
 
     MONTH_CHOICES = (
-        (JANUARY, 'enero'),
-        (FEBRUARY, 'febrero'),
-        (MARCH, 'marzo'),
-        (APRIL, 'abril'),
-        (MAY, 'mayo'),
-        (JUNE, 'junio'),
-        (JULY, 'julio'),
-        (AUGUST, 'agosto'),
-        (SEPTEMBER, 'septiembre'),
-        (OCTOBER, 'octubre'),
-        (NOVEMBER, 'noviembre'),
-        (DECEMBER, 'diciembre'),
+        (JANUARY, "enero"),
+        (FEBRUARY, "febrero"),
+        (MARCH, "marzo"),
+        (APRIL, "abril"),
+        (MAY, "mayo"),
+        (JUNE, "junio"),
+        (JULY, "julio"),
+        (AUGUST, "agosto"),
+        (SEPTEMBER, "septiembre"),
+        (OCTOBER, "octubre"),
+        (NOVEMBER, "noviembre"),
+        (DECEMBER, "diciembre"),
     )
 
     account = models.ForeignKey(
-        Account, limit_choices_to={'level': Account.ADMIN},
-        related_name='account')
+        Account, limit_choices_to={"level": Account.ADMIN},
+        related_name="account")
     month = models.CharField(max_length=3, choices=MONTH_CHOICES)
     mount = models.DecimalField(decimal_places=2, max_digits=10)
 

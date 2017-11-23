@@ -6,6 +6,7 @@ django-devserver
 django-extensions
 ipython
 line_profiler
+model_mommy
 pip-tools
 pydotplus
 pygraphviz
