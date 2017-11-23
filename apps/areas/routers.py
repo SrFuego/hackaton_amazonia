@@ -12,7 +12,7 @@ from .viewsets import MoneyViewSet, VisitsViewSet
 
 
 # Create your routers here.
-router_list = (
-    (r'money', MoneyViewSet),
-    (r'visits', VisitsViewSet),
+areas = (
+    (r"money", MoneyViewSet),
+    (r"visits", VisitsViewSet),
 )
