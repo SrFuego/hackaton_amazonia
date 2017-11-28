@@ -26,8 +26,7 @@ from apps.common.routers import router
 
 
 from apps.accounts.views import ObtainAuthToken
-from apps.areas.views import ChartView, ChartPayersView
-
+from apps.areas.views import VisitsChartView, PayersChartView
 
 
 API_TITLE = "API app para la hackaton de la amazonia"
@@ -42,8 +41,12 @@ urlpatterns = [
     url(
         r"^api/v1/api-token-auth/", ObtainAuthToken.as_view(),
         name="custom-token-view"),
-    url(r"^api/v1/chart/", ChartView.as_view()),
-    url(r"^api/v1/chart-payers/", ChartPayersView.as_view()),
+    url(
+        r"^api/v1/chart/visits/", VisitsChartView.as_view(),
+        name="visits-chart"),
+    url(
+        r"^api/v1/chart/payers/", PayersChartView.as_view(),
+        name="payers-chart"),
     url(
         r"^docs/",
         include_docs_urls(title=API_TITLE, description=API_DESCRIPTION))
