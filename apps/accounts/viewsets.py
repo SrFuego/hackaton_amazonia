@@ -7,6 +7,7 @@
 # Third party apps imports
 from rest_framework.viewsets import ModelViewSet
 
+
 # Local imports
 from .serializers import AccountSerializer
 from .models import Account

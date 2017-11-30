@@ -2,7 +2,7 @@
 
 
 # Django imports
-from django.test import TestCase
+# from django.test import TestCase
 
 
 # Third party apps imports

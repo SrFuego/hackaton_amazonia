@@ -9,10 +9,10 @@ from django.contrib import admin
 
 
 # Local imports
-from .models import ProtectedNaturalArea, Visits, Money
+from .models import Money, ProtectedNaturalArea, Visits
 
 
 # Register your models here.
+admin.site.register(Money)
 admin.site.register(ProtectedNaturalArea)
 admin.site.register(Visits)
-admin.site.register(Money)

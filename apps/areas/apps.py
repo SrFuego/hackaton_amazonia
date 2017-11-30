@@ -13,4 +13,4 @@ from django.apps import AppConfig
 
 # Configure your app here.
 class AreasConfig(AppConfig):
-    name = 'areas'
+    name = "areas"

@@ -13,4 +13,4 @@ from django.apps import AppConfig
 
 # Configure your app here.
 class CommonConfig(AppConfig):
-    name = 'common'
+    name = "common"

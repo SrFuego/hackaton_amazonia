@@ -4,8 +4,10 @@
 # Django imports
 from django.contrib.auth import get_user_model
 
+
 # Third party apps imports
 from rest_framework.serializers import ModelSerializer
+
 
 # Local imports
 from .models import Account
@@ -15,7 +17,7 @@ from .models import Account
 class UserSerializer(ModelSerializer):
     class Meta:
         model = get_user_model()
-        fields = ('id', 'first_name', 'last_name', 'email',)
+        fields = ("id", "first_name", "last_name", "email",)
 
 
 class AccountSerializer(ModelSerializer):
@@ -23,4 +25,4 @@ class AccountSerializer(ModelSerializer):
 
     class Meta:
         model = Account
-        fields = ('id', 'level', 'user',)
+        fields = ("id", "level", "user",)

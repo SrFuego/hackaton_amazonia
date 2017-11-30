@@ -7,9 +7,11 @@
 # Third party apps imports
 from rest_framework.routers import DefaultRouter
 
+
 # Local imports
 from ..accounts.routers import accounts
 from ..areas.routers import areas
+
 
 # Create your routers here.
 routers_tuples = (accounts, areas,)

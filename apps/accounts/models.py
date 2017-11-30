@@ -2,8 +2,9 @@
 
 
 # Django imports
-from django.db import models
 from django.conf import settings
+from django.db import models
+
 
 # Third party apps imports
 from model_utils.models import TimeStampedModel
