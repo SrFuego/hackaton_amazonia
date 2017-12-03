@@ -25,6 +25,7 @@ class ProtectedNaturalAreaViewSet(ModelViewSet):
 class VisitsViewSet(ModelViewSet):
     queryset = Visits.objects.all()
     serializer_class = VisitsSerializer
+    filter_fields = ("approved",)
     http_method_names = ["get", "post", "put"]
 
 
