@@ -2,10 +2,16 @@
 
 
 # Django imports
+# from django.shortcuts import get_object_or_404
+from django.template import loader, Context
 from django.utils import timezone
 
 
 # Third party apps imports
+from drf_pdf.renderer import PDFRenderer
+from pdfkit import from_string
+from rest_framework import status
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -96,3 +102,19 @@ class VisitsAnualView(APIView):
             aux_list.append(aux)
             aux = {}
         return Response({"list_anp": aux_list})
+
+
+class ReportPDF(APIView):
+    permission_classes = (AllowAny,)
+    renderer_classes = (PDFRenderer,)
+
+    def get(self, request, *args, **kwargs):
+        template = loader.get_template("areas/reporte_pdf.html")
+        data = {}
+        context = Context()
+        html = template.render({})
+        pdf = from_string(html, False)
+        headers = {
+            "Content-Disposition": "filename='foo.pdf'",
+            "Content-Length": len(pdf)}
+        return Response(pdf, headers=headers, status=status.HTTP_200_OK)

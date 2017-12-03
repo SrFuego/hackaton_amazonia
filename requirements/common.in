@@ -9,8 +9,10 @@ django-model-utils
 django-pipeline
 django-stdimage
 djangorestframework
+drf-pdf
 drfdocs
 markdown
+pdfkit
 pip-tools
 psycopg2
 pygments
