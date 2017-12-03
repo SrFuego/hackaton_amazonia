@@ -26,11 +26,14 @@ from apps.common.routers import router
 
 
 from apps.accounts.views import ObtainAuthToken
-from apps.areas.views import ReportPDF, VisitsAnualView, VisitsChartView
+from apps.areas.views import (
+    ReportPDF, VisitsCompareLastYearView, VisitsChartView,
+    VisitsPeriodCompareLastYearView)
 
 
-API_TITLE = "API app para la hackaton de la amazonia"
-API_DESCRIPTION = "nombre de la app aun por definir :D"
+API_TITLE = "API de Perú Natural"
+API_DESCRIPTION = """
+    Api compartida por los 3 perfiles: Guardabosques, Administrador y Jefe"""
 
 
 urlpatterns = [
@@ -42,14 +45,17 @@ urlpatterns = [
     url(
         r"^api/v1/api-token-auth/", ObtainAuthToken.as_view(),
         name="custom-token-view"),
-    url(r"^api/v1/visits-anual/", VisitsAnualView.as_view()),
-    url(
-        r"^api/v1/chart/visits/", VisitsChartView.as_view(),
-        name="visits-chart"),
     # url(
     #     r"^api/v1/chart/payers/", PayersChartView.as_view(),
     #     name="payers-chart"),
-    url(r"^api/v1/report/", ReportPDF.as_view(), name="report"),
+    url(
+        r"^api/v1/reports/chart/visits/", VisitsChartView.as_view(),
+        name="visits-chart"),
+    url(r"^api/v1/reports/pdf", ReportPDF.as_view(), name="report"),
+    url(r"^api/v1/reports/visits-anual/", VisitsCompareLastYearView.as_view()),
+    url(
+        r"^api/v1/reports/visits-anual-period/",
+        VisitsPeriodCompareLastYearView.as_view()),
     url(
         r"^docs/",
         include_docs_urls(title=API_TITLE, description=API_DESCRIPTION))
