@@ -17,3 +17,4 @@ from .models import Account
 class AccountViewSet(ModelViewSet):
     queryset = Account.objects.all()
     serializer_class = AccountSerializer
+    http_method_names = ["get"]

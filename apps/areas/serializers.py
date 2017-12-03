@@ -27,7 +27,7 @@ class VisitsSerializer(ModelSerializer):
         model = Visits
         fields = (
             "approved", "date", "exonerated", "foreign", "id", "national",
-            "non_paying", "payers", "protected_natural_area",)
+            "protected_natural_area",)
 
 
 class MoneySerializer(ModelSerializer):

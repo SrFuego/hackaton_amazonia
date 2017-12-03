@@ -29,8 +29,6 @@ class Visits(TimeStampedModel):
     exonerated = models.PositiveIntegerField()
     foreign = models.PositiveIntegerField()
     national = models.PositiveIntegerField()
-    non_paying = models.PositiveIntegerField()
-    payers = models.PositiveIntegerField()
     protected_natural_area = models.ForeignKey(
         "ProtectedNaturalArea", related_name="visits")
 

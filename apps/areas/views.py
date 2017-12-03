@@ -2,8 +2,8 @@
 
 
 # Django imports
-# from django.shortcuts import get_object_or_404
-from django.template import loader, Context
+from django.shortcuts import get_object_or_404
+from django.template import loader
 from django.utils import timezone
 
 
@@ -46,25 +46,25 @@ class VisitsChartView(APIView):
             "exonerated_percent": exonerated_percent})
 
 
-class PayersChartView(APIView):
-    def get(self, request, format=None):
-        visits = Visits.objects.filter(date__year=timezone.now().year)
-        if len(request.query_params) == 0:
-            month_filter = timezone.now().month
-        else:
-            month_filter = request.query_params["month"]
-        visits = visits.filter(date__month=month_filter)
-        payers = sum(visits.values_list("payers", flat=True))
-        non_paying = sum(visits.values_list("non_paying", flat=True))
-        total = payers + non_paying
-        payers_percent = round(payers * 100 / total) if total else 0
-        non_paying_percent = round(non_paying * 100 / total) if total else 0
-        return Response({
-            "total": total,
-            "payers": payers,
-            "non_paying": non_paying,
-            "payers_percent": payers_percent,
-            "non_paying_percent": non_paying_percent})
+# class PayersChartView(APIView):
+#     def get(self, request, format=None):
+#         visits = Visits.objects.filter(date__year=timezone.now().year)
+#         if len(request.query_params) == 0:
+#             month_filter = timezone.now().month
+#         else:
+#             month_filter = request.query_params["month"]
+#         visits = visits.filter(date__month=month_filter)
+#         payers = sum(visits.values_list("payers", flat=True))
+#         non_paying = sum(visits.values_list("non_paying", flat=True))
+#         total = payers + non_paying
+#         payers_percent = round(payers * 100 / total) if total else 0
+#         non_paying_percent = round(non_paying * 100 / total) if total else 0
+#         return Response({
+#             "total": total,
+#             "payers": payers,
+#             "non_paying": non_paying,
+#             "payers_percent": payers_percent,
+#             "non_paying_percent": non_paying_percent})
 
 
 class VisitsAnualView(APIView):
@@ -110,8 +110,6 @@ class ReportPDF(APIView):
 
     def get(self, request, *args, **kwargs):
         template = loader.get_template("areas/reporte_pdf.html")
-        data = {}
-        context = Context()
         html = template.render({})
         pdf = from_string(html, False)
         headers = {
