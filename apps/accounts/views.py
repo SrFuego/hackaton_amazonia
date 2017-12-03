@@ -34,11 +34,22 @@ class ObtainAuthToken(APIView):
         token, created = Token.objects.get_or_create(user=user)
         try:
             account = user.account
-            return Response({
-                "account_id": account.id,
-                "account_level": account.level,
-                "token": token.key
-            }, status=status.HTTP_200_OK)
+            if account.level == "operator":
+                return Response({
+                    "account_id": account.id,
+                    "account_level": account.level,
+                    "protected_natural_area": {
+                        "id": account.protected_natural_area.id,
+                        "name": account.protected_natural_area.name
+                    },
+                    "token": token.key
+                }, status=status.HTTP_200_OK)
+            else:
+                return Response({
+                    "account_id": account.id,
+                    "account_level": account.level,
+                    "token": token.key
+                }, status=status.HTTP_200_OK)
         except Exception as e:
             return Response(
                 {"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)

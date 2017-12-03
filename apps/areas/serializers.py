@@ -30,6 +30,12 @@ class VisitsSerializer(ModelSerializer):
             "protected_natural_area",)
 
 
+class VisitsUpdateSerializer(ModelSerializer):
+    class Meta:
+        model = Visits
+        fields = ("approved",)
+
+
 class MoneySerializer(ModelSerializer):
     account = AccountSerializer()
 
