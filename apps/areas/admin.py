@@ -19,5 +19,5 @@ admin.site.register(ProtectedNaturalArea)
 
 @admin.register(Visits)
 class VisitsAdmin(admin.ModelAdmin):
-    list_display = ("__str__", "approved",)
+    list_display = ("__str__", "date", "approved",)
     list_editable = ("approved",)
