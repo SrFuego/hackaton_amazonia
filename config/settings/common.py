@@ -23,8 +23,8 @@ SECRET_KEY = os.environ.get("SECRET_KEY", "foo")
 
 DJANGO_APPS = (
     # Admin third party app, but need put before 'django.contrib.admin'
-    "material",
-    "material.admin",
+    # "material",
+    # "material.admin",
 
     "django.contrib.admin",
     "django.contrib.auth",

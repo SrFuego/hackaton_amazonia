@@ -15,4 +15,9 @@ from .models import Money, ProtectedNaturalArea, Visits
 # Register your models here.
 admin.site.register(Money)
 admin.site.register(ProtectedNaturalArea)
-admin.site.register(Visits)
+
+
+@admin.register(Visits)
+class VisitsAdmin(admin.ModelAdmin):
+    list_display = ("__str__", "approved",)
+    list_editable = ("approved",)
