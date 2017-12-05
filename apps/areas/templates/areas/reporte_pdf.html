@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Reporte Peru Natural</title>
+    <title>Reporte Perú Natural</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no'
           name='viewport'>
     <link rel="stylesheet"
@@ -47,8 +47,18 @@
     </style>
 </head>
 <body>
+
+<div class="pb">
+    <h1>Reportes de Perú Natural</h1>
+</div>
+
+
 <table class="table table-sm table-bordered">
     <thead>
+    <tr>
+        <th colspan="6" class="text-center">Reporte Comparando mes a mes respecto al año pasado
+        </th>
+    </tr>
     <tr>
         <th scope="col">N°</th>
         <th scope="col">Áreas Naturales Protegidas Visitadas</th>
@@ -126,6 +136,93 @@
     {% endfor %}
     </tbody>
 </table>
+
+
+<table class="table table-sm table-bordered">
+    <thead>
+    <tr>
+        <th colspan="6" class="text-center">Reporte Comparando periodo a periodo respecto al año
+            pasado
+        </th>
+    </tr>
+    <tr>
+        <th scope="col">N°</th>
+        <th scope="col">Áreas Naturales Protegidas Visitadas</th>
+        <th scope="col">Tipo de Visitante</th>
+        <th scope="col">{{ month }}-2016</th>
+        <th scope="col">{{ month }}-2017</th>
+        <th scope="col">% de Variación</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for anp in anp_per_period %}
+    <tr>
+        <td rowspan="3">{{ forloop.counter }}</td>
+        <td rowspan="3">{{ anp.name }}</td>
+
+        {% if anp.foreign_percent == 0 %}
+        <td>Extranjero</td>
+        <td>{{ anp.last_year_foreign }}</td>
+        <td>{{ anp.this_year_foreign }}</td>
+        <td>{{ anp.foreign_percent }} %</td>
+        {% else %}
+        {% if anp.foreign_negative %}
+        <td class="text-danger">Extranjero</td>
+        <td class="text-danger">{{ anp.last_year_foreign }}</td>
+        <td class="text-danger">{{ anp.this_year_foreign }}</td>
+        <td class="text-danger">{{ anp.foreign_percent }} %</td>
+        {% else %}
+        <td class="text-success">Extranjero</td>
+        <td class="text-success">{{ anp.last_year_foreign }}</td>
+        <td class="text-success">{{ anp.this_year_foreign }}</td>
+        <td class="text-success">{{ anp.foreign_percent }} %</td>
+        {% endif %}
+        {% endif %}
+    </tr>
+    <tr>
+        {% if anp.national_percent == 0 %}
+        <td>Nacional</td>
+        <td>{{ anp.last_year_national }}</td>
+        <td>{{ anp.this_year_national }}</td>
+        <td>{{ anp.national_percent }} %</td>
+        {% else %}
+        {% if anp.national_negative %}
+        <td class="text-danger">Nacional</td>
+        <td class="text-danger">{{ anp.last_year_national }}</td>
+        <td class="text-danger">{{ anp.this_year_national }}</td>
+        <td class="text-danger">{{ anp.national_percent }} %</td>
+        {% else %}
+        <td class="text-success">Nacional</td>
+        <td class="text-success">{{ anp.last_year_national }}</td>
+        <td class="text-success">{{ anp.this_year_national }}</td>
+        <td class="text-success">{{ anp.national_percent }} %</td>
+        {% endif %}
+        {% endif %}
+    </tr>
+    <tr>
+        {% if anp.exonerated_percent == 0 %}
+        <td>Exonerado</td>
+        <td>{{ anp.last_year_exonerated }}</td>
+        <td>{{ anp.this_year_exonerated }}</td>
+        <td>{{ anp.exonerated_percent }} %</td>
+        {% else %}
+        {% if anp.exonerated_negative %}
+        <td class="text-danger">Exonerado</td>
+        <td class="text-danger">{{ anp.last_year_exonerated }}</td>
+        <td class="text-danger">{{ anp.this_year_exonerated }}</td>
+        <td class="text-danger">{{ anp.exonerated_percent }} %</td>
+        {% else %}
+        <td class="text-success">Exonerado</td>
+        <td class="text-success">{{ anp.last_year_exonerated }}</td>
+        <td class="text-success">{{ anp.this_year_exonerated }}</td>
+        <td class="text-success">{{ anp.exonerated_percent }} %</td>
+        {% endif %}
+        {% endif %}
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
 
 <!--<br><br><br><br><br>-->
 <!--{% for anp in anp_per_month %}-->

@@ -191,10 +191,10 @@ class VisitsPeriodCompareLastYearView(APIView):
                 aux["exonerated_negative"] = False
 
             aux_percent = aux["this_year_foreign"] * 100
-            if aux["last_year_exonerated"] == 0:
+            if aux["last_year_foreign"] == 0:
                 aux_percent = 0
             else:
-                aux_percent /= aux["last_year_exonerated"]
+                aux_percent /= aux["last_year_foreign"]
             if aux["last_year_foreign"]:
                 aux["foreign_percent"] = aux_percent - 100
             else:
@@ -205,10 +205,10 @@ class VisitsPeriodCompareLastYearView(APIView):
                 aux["foreign_negative"] = False
 
             aux_percent = aux["this_year_national"] * 100
-            if aux["last_year_exonerated"] == 0:
+            if aux["last_year_national"] == 0:
                 aux_percent = 0
             else:
-                aux_percent /= aux["last_year_exonerated"]
+                aux_percent /= aux["last_year_national"]
             if aux["last_year_national"]:
                 aux["national_percent"] = aux_percent - 100
             else:
@@ -229,7 +229,7 @@ class ReportPDF(APIView):
 
     def get(self, request, *args, **kwargs):
         aux = {}
-        aux_list = []
+        aux_list_per_month = []
         this_year = timezone.now().year
         last_year = this_year - 1
         if len(request.query_params) == 0:
@@ -239,9 +239,11 @@ class ReportPDF(APIView):
 
         for anp in ProtectedNaturalArea.objects.all():
             visits = Visits.objects.filter(
-                approved=True, date__year=this_year, protected_natural_area=anp)
+                approved=True, date__year=this_year,
+                protected_natural_area=anp)
             visits_last_year = Visits.objects.filter(
-                approved=True, date__year=last_year, protected_natural_area=anp)
+                approved=True, date__year=last_year,
+                protected_natural_area=anp)
             visits = visits.filter(date__month=month_filter)
             visits_last_year = visits_last_year.filter(
                 date__month=month_filter)
@@ -303,26 +305,96 @@ class ReportPDF(APIView):
             else:
                 aux["national_negative"] = False
 
-            aux_list.append(aux)
+            aux_list_per_month.append(aux)
+            aux = {}
+
+        aux = {}
+        aux_list_per_period = []
+        for anp in ProtectedNaturalArea.objects.all():
+            visits = Visits.objects.filter(
+                date__year=this_year, protected_natural_area=anp)
+            visits_last_year = Visits.objects.filter(
+                date__year=last_year, protected_natural_area=anp)
+            visits = visits.filter(date__month__lte=month_filter)
+            visits_last_year = visits_last_year.filter(
+                date__month__lte=month_filter)
+            aux["name"] = anp.name
+            aux["this_year_exonerated"] = sum(
+                visits.values_list("exonerated", flat=True))
+            aux["this_year_foreign"] = sum(
+                visits.values_list("foreign", flat=True))
+            aux["this_year_national"] = sum(
+                visits.values_list("national", flat=True))
+            aux["last_year_exonerated"] = sum(
+                visits_last_year.values_list("exonerated", flat=True))
+            aux["last_year_foreign"] = sum(
+                visits_last_year.values_list("foreign", flat=True))
+            aux["last_year_national"] = sum(
+                visits_last_year.values_list("national", flat=True))
+
+            aux_percent = aux["this_year_exonerated"] * 100
+            if aux["last_year_exonerated"] == 0:
+                aux_percent = 0
+            else:
+                aux_percent /= aux["last_year_exonerated"]
+            if aux["last_year_exonerated"]:
+                aux["exonerated_percent"] = round(aux_percent - 100, 1)
+            else:
+                aux["exonerated_percent"] = 0
+            if aux["exonerated_percent"] < 0:
+                aux["exonerated_negative"] = True
+            else:
+                aux["exonerated_negative"] = False
+
+            aux_percent = aux["this_year_foreign"] * 100
+            if aux["last_year_foreign"] == 0:
+                aux_percent = 0
+            else:
+                aux_percent /= aux["last_year_foreign"]
+            if aux["last_year_foreign"]:
+                aux["foreign_percent"] = round(aux_percent - 100, 1)
+            else:
+                aux["foreign_percent"] = 0
+            if aux["foreign_percent"] < 0:
+                aux["foreign_negative"] = True
+            else:
+                aux["foreign_negative"] = False
+
+            aux_percent = aux["this_year_national"] * 100
+            if aux["last_year_national"] == 0:
+                aux_percent = 0
+            else:
+                aux_percent /= aux["last_year_national"]
+            if aux["last_year_national"]:
+                aux["national_percent"] = round(aux_percent - 100, 1)
+            else:
+                aux["national_percent"] = 0
+            if aux["national_percent"] < 0:
+                aux["national_negative"] = True
+            else:
+                aux["national_negative"] = False
+
+            aux_list_per_period.append(aux)
             aux = {}
 
         template = loader.get_template("areas/reporte_pdf.html")
         html = template.render({
-            "anp_per_month": aux_list,
-            "month": Money.MONTH_CHOICES[int(month_filter) - 1][1].upper()[:3],
-        })
+            "anp_per_month": aux_list_per_month,
+            "anp_per_period": aux_list_per_period,
+            "month": Money.MONTH_CHOICES[
+                int(month_filter) - 1][1].upper()[:3]})
         pdf_options = {
-            'quiet': "",
-            'page-size': 'A4',
-            'margin-top': '0.5in',
-            'margin-right': '0.75in',
-            'margin-bottom': '0.75in',
-            'margin-left': '0.75in',
-            'encoding': "UTF-8",
-            'custom-header': [
-                ('Accept-Encoding', 'gzip')
+            "quiet": "",
+            "page-size": "A4",
+            "margin-top": "0.5in",
+            "margin-right": "0.75in",
+            "margin-bottom": "0.75in",
+            "margin-left": "0.75in",
+            "encoding": "UTF-8",
+            "custom-header": [
+                ("Accept-Encoding", "gzip")
             ],
-            'no-outline': None
+            "no-outline": None
         }
         pdf = from_string(html, False, options=pdf_options)
         headers = {
