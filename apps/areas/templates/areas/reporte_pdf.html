@@ -1,61 +1,137 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Reporte Peru Natural</title>
-        <meta name="google-signin-scope" content="profile email">
-        <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
-        <style type="text/css">
-            .pb {
-                page-break-before: always;
-            }
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Reporte Peru Natural</title>
+    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no'
+          name='viewport'>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
+          integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
+          crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"
+            integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"
+            integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
+            crossorigin="anonymous"></script>
+    <style type="text/css">
+        .pb {
+            page-break-before: always;
+        }
 
-* {
-    box-sizing: border-box;
-}
+        * {
+            box-sizing: border-box;
+        }
 
-body {
-    font-family: "Roboto", sans-serif;
-    font-size: 14px;
-    line-height: 1.42857143;
-    color: rgba(0, 0, 0, 0.87);
-    background-color: #fff;
-}
+        body {
+            font-family: "Roboto", sans-serif;
+            font-size: 14px;
+            line-height: 1.42857143;
+            color: rgba(0, 0, 0, 0.87);
+            background-color: #fff;
+        }
 
-*:before, *:after {
-    box-sizing: border-box;
-}
+        th {
+            color: #003366;
+            vertical-align: middle;
+        }
 
-h5{
-    font-size: 14px;
-}
+        .table > tbody > tr > td {
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+<table class="table table-sm table-bordered">
+    <thead>
+    <tr>
+        <th scope="col">N°</th>
+        <th scope="col">Áreas Naturales Protegidas Visitadas</th>
+        <th scope="col">Tipo de Visitante</th>
+        <th scope="col">{{ month }}-2016</th>
+        <th scope="col">{{ month }}-2017</th>
+        <th scope="col">% de Variación</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for anp in anp_per_month %}
+    <tr>
+        <td rowspan="3">{{ forloop.counter }}</td>
+        <td rowspan="3">{{ anp.name }}</td>
 
-.table>thead>tr>th,
-.table>thead>tr>td,
-.table>tbody>tr>td{
-    padding: 4px;
-    line-height: 1.42857143;
-    vertical-align: top;
-    border: 1px solid #ddd;
-}
+        {% if anp.foreign_percent == 0 %}
+        <td>Extranjero</td>
+        <td>{{ anp.last_year_foreign }}</td>
+        <td>{{ anp.this_year_foreign }}</td>
+        <td>{{ anp.foreign_percent }} %</td>
+        {% else %}
+        {% if anp.foreign_negative %}
+        <td class="text-danger">Extranjero</td>
+        <td class="text-danger">{{ anp.last_year_foreign }}</td>
+        <td class="text-danger">{{ anp.this_year_foreign }}</td>
+        <td class="text-danger">{{ anp.foreign_percent }} %</td>
+        {% else %}
+        <td class="text-success">Extranjero</td>
+        <td class="text-success">{{ anp.last_year_foreign }}</td>
+        <td class="text-success">{{ anp.this_year_foreign }}</td>
+        <td class="text-success">{{ anp.foreign_percent }} %</td>
+        {% endif %}
+        {% endif %}
+    </tr>
+    <tr>
+        {% if anp.national_percent == 0 %}
+        <td>Nacional</td>
+        <td>{{ anp.last_year_national }}</td>
+        <td>{{ anp.this_year_national }}</td>
+        <td>{{ anp.national_percent }} %</td>
+        {% else %}
+        {% if anp.national_negative %}
+        <td class="text-danger">Nacional</td>
+        <td class="text-danger">{{ anp.last_year_national }}</td>
+        <td class="text-danger">{{ anp.this_year_national }}</td>
+        <td class="text-danger">{{ anp.national_percent }} %</td>
+        {% else %}
+        <td class="text-success">Nacional</td>
+        <td class="text-success">{{ anp.last_year_national }}</td>
+        <td class="text-success">{{ anp.this_year_national }}</td>
+        <td class="text-success">{{ anp.national_percent }} %</td>
+        {% endif %}
+        {% endif %}
+    </tr>
+    <tr>
+        {% if anp.exonerated_percent == 0 %}
+        <td>Exonerado</td>
+        <td>{{ anp.last_year_exonerated }}</td>
+        <td>{{ anp.this_year_exonerated }}</td>
+        <td>{{ anp.exonerated_percent }} %</td>
+        {% else %}
+        {% if anp.exonerated_negative %}
+        <td class="text-danger">Exonerado</td>
+        <td class="text-danger">{{ anp.last_year_exonerated }}</td>
+        <td class="text-danger">{{ anp.this_year_exonerated }}</td>
+        <td class="text-danger">{{ anp.exonerated_percent }} %</td>
+        {% else %}
+        <td class="text-success">Exonerado</td>
+        <td class="text-success">{{ anp.last_year_exonerated }}</td>
+        <td class="text-success">{{ anp.this_year_exonerated }}</td>
+        <td class="text-success">{{ anp.exonerated_percent }} %</td>
+        {% endif %}
+        {% endif %}
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
 
-.table{
-    margin-bottom: 0;
-    border: 1px solid #ddd;
-    width: 100%;
-    max-width: 100%;
-    border-spacing: 0;
-    border-collapse: collapse; background-color: transparent;
-}
-.table_question{
-    display: block;
-    width: 100%;
-    margin: 25px 0 0;
-}
-        </style>
-    </head>
-    <body>
-        Reporte aun en construccion
-    </body>
+<!--<br><br><br><br><br>-->
+<!--{% for anp in anp_per_month %}-->
+<!--{{anp}}-->
+<!--<br>-->
+<!--<br>-->
+<!--{% endfor %}-->
+</body>
 </html>
