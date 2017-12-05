@@ -103,7 +103,7 @@ class VisitsCompareLastYearView(APIView):
             else:
                 aux_percent /= aux["last_year_exonerated"]
             if aux["last_year_exonerated"]:
-                aux["exonerated_percent"] = aux_percent - 100
+                aux["exonerated_percent"] = round(aux_percent - 100)
             else:
                 aux["exonerated_percent"] = 0
             if aux["exonerated_percent"] < 0:
@@ -117,7 +117,7 @@ class VisitsCompareLastYearView(APIView):
             else:
                 aux_percent /= aux["last_year_foreign"]
             if aux["last_year_foreign"]:
-                aux["foreign_percent"] = aux_percent - 100
+                aux["foreign_percent"] = round(aux_percent - 100)
             else:
                 aux["foreign_percent"] = 0
             if aux["foreign_percent"] < 0:
@@ -131,7 +131,7 @@ class VisitsCompareLastYearView(APIView):
             else:
                 aux_percent /= aux["last_year_national"]
             if aux["last_year_national"]:
-                aux["national_percent"] = aux_percent - 100
+                aux["national_percent"] = round(aux_percent - 100)
             else:
                 aux["national_percent"] = 0
             if aux["national_percent"] < 0:
@@ -182,7 +182,7 @@ class VisitsPeriodCompareLastYearView(APIView):
             else:
                 aux_percent /= aux["last_year_exonerated"]
             if aux["last_year_exonerated"]:
-                aux["exonerated_percent"] = aux_percent - 100
+                aux["exonerated_percent"] = round(aux_percent - 100)
             else:
                 aux["exonerated_percent"] = 0
             if aux["exonerated_percent"] < 0:
@@ -196,7 +196,7 @@ class VisitsPeriodCompareLastYearView(APIView):
             else:
                 aux_percent /= aux["last_year_foreign"]
             if aux["last_year_foreign"]:
-                aux["foreign_percent"] = aux_percent - 100
+                aux["foreign_percent"] = round(aux_percent - 100)
             else:
                 aux["foreign_percent"] = 0
             if aux["foreign_percent"] < 0:
@@ -210,7 +210,7 @@ class VisitsPeriodCompareLastYearView(APIView):
             else:
                 aux_percent /= aux["last_year_national"]
             if aux["last_year_national"]:
-                aux["national_percent"] = aux_percent - 100
+                aux["national_percent"] = round(aux_percent - 100)
             else:
                 aux["national_percent"] = 0
             if aux["national_percent"] < 0:
